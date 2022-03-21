@@ -1,4 +1,5 @@
 # GUAT campus network auto login
+桂航校园网自动登录脚本，使用python构建
 
 ## Introduce 介绍
 这个script是为航院校园网认证系统设计的自动化登录脚本  
