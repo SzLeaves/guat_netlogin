@@ -23,7 +23,7 @@ def genconfig():
     config['isp_name'] = input("enter your isp name (campus/telecom/unicom/mobile): ")
 
     try:
-        with open("config.json", "w") as file:
+        with open("config.json", 'w', encoding='utf-8') as file:
             json.dump(config, file, ensure_ascii=False)
     except IOError as e:
         print(e)

@@ -11,7 +11,7 @@ import src.logout as logout
 if __name__ == "__main__":
     flag = False
     # load response file
-    with open("resource/error_info.json", 'r') as file:
+    with open("resource/error_info.json", 'r', encoding='utf-8') as file:
         msg_list = json.load(file)
 
     if len(sys.argv) > 1:
@@ -27,7 +27,7 @@ if __name__ == "__main__":
             if os.path.exists("config.json"):
                 # load configure file
                 isp_list = {'campus': 0, 'telecom': 1, 'unicom': 2, 'mobile': 3}
-                with open("config.json") as file:
+                with open("config.json", 'r', encoding='utf-8') as file:
                     config = json.load(file)
 
                 # choose isp
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         elif sys.argv[1] == 'down':
             if os.path.exists("config.json"):
                 # load configure file
-                with open("config.json") as file:
+                with open("config.json", 'r', encoding='utf-8') as file:
                     config = json.load(file)
 
                 logout.logout(config, msg_list)
