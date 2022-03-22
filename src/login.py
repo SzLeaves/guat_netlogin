@@ -3,15 +3,20 @@
 
 import json
 import re
+import sys
 import urllib.error
 import urllib.request
+
+# load response file
+with open("resource/error_info.json", 'r', encoding='utf-8') as file:
+    msg_list = json.load(file)
 
 login_api = "http://%s/drcom/login?callback=dr1647823658089" \
             "&DDDDD=%s&upass=%s&0MKKey=123456&R1=0&R3=%d&R6=0&para=00&v6ip="
 isp_list = {'campus': 0, 'telecom': 1, 'unicom': 2, 'mobile': 3}
 
 
-def request(lip, uid, passwd, isp, msg_list):
+def request(lip, uid, passwd, isp):
     # login network
     try:
         res = urllib.request.urlopen(login_api % (lip, uid, passwd, isp), timeout=5)
@@ -34,10 +39,9 @@ def request(lip, uid, passwd, isp, msg_list):
         print(data)
 
 
-def login(config, msg_list, isp=None):
-    counts = 0
-
+def login(config, isp=None):
     # test connection 5 times for gateway
+    counts = 0
     print("connection for %s" % config['gateway_ip'])
     while counts < 5:
         try:
@@ -52,8 +56,12 @@ def login(config, msg_list, isp=None):
     if counts == 5:
         raise ConnectionError("[ERROR] Campus network %s has unavaliable." % config['gateway_ip'])
     else:
+        # isp vaildity
+        if config['isp_name'] not in isp_list or (isp and isp not in isp_list):
+            print("[ERROR] Specified ISP not exists.")
+            sys.exit(1)
+
         if isp:
-            request(config['gateway_ip'], config['user_id'], config['user_passwd'], isp, msg_list)
+            request(config['gateway_ip'], config['user_id'], config['user_passwd'], isp_list[isp])
         else:
-            request(config['gateway_ip'], config['user_id'], config['user_passwd'], isp_list[config['isp_name']],
-                    msg_list)
+            request(config['gateway_ip'], config['user_id'], config['user_passwd'], isp_list[config['isp_name']])

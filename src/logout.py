@@ -6,10 +6,14 @@ import re
 import urllib.error
 import urllib.request
 
+# load response file
+with open("resource/error_info.json", 'r', encoding='utf-8') as file:
+    msg_list = json.load(file)
+
 logout_api = "http://%s/drcom/logout?callback=dr1647825375804"
 
 
-def request(lip, msg_list):
+def request(lip):
     try:
         res = urllib.request.urlopen(logout_api % lip, timeout=5)
         data = str(res.read().decode('gbk')).strip()
@@ -30,7 +34,7 @@ def request(lip, msg_list):
         print(data)
 
 
-def logout(config, msg_list):
+def logout(config):
     counts = 0
 
     # test connection 5 times for gateway
@@ -48,4 +52,4 @@ def logout(config, msg_list):
     if counts == 5:
         raise ConnectionError("[ERROR] Campus network %s has unavaliable." % config['gateway_ip'])
     else:
-        request(config['gateway_ip'], msg_list)
+        request(config['gateway_ip'])

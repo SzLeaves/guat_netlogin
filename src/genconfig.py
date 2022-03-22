@@ -27,5 +27,9 @@ def genconfig():
             json.dump(config, file, ensure_ascii=False)
     except IOError as e:
         print(e)
-        print("Configure file generated faild.")
+        print("[ERROR] Configure file generated faild.")
         sys.exit(1)
+
+    print("Configure file generated successful.",
+          "Use: %s up to login network." % sys.argv[0],
+          "Use: %s down to logout network." % sys.argv[0], sep='\n')
