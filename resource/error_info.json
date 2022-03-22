@@ -53,5 +53,6 @@
   "Oppp error: INVALID LOCATION.": "运营商锁定的用户端口错误 Oppp error: INVALID LOCATION.",
   "Oppp error: 99": "帐号绑定域名错误，请联系运营商检查或解绑。 Oppp error: 99",
   "error5 waitsec <3": "登录过于频繁，请等候重新登录。 error5 waitsec <3",
-  "Logout Error(-1)": "无登录用户 Logout Error, no user"
+  "Logout Error(-1)": "无登录用户 Logout Error, no user",
+  "Oppp error: 109026004|109020109|Reject by concurrency control.": "Reject by concurrency control 109020109"
 }
