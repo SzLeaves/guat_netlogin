@@ -43,6 +43,7 @@ def login(config, isp=None):
             isp_list = json.load(file)
     except FileNotFoundError as e:
         print(e)
+        sys.exit(1)
 
     # test connection 5 times for gateway
     counts = 0

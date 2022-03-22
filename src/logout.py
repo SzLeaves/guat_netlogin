@@ -3,6 +3,7 @@
 
 import json
 import re
+import sys
 import urllib.error
 import urllib.request
 
@@ -32,8 +33,12 @@ def request(lip, msg_list):
 
 def logout(config):
     # load response file
-    with open("resource/error_info.json", 'r', encoding='utf-8') as file:
-        msg_list = json.load(file)
+    try:
+        with open("resource/error_info.json", 'r', encoding='utf-8') as file:
+            msg_list = json.load(file)
+    except FileNotFoundError as e:
+        print(e)
+        sys.exit(1)
 
     # test connection 5 times for gateway
     counts = 0
