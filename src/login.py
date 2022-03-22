@@ -7,16 +7,11 @@ import sys
 import urllib.error
 import urllib.request
 
-# load response file
-with open("resource/error_info.json", 'r', encoding='utf-8') as file:
-    msg_list = json.load(file)
-
 login_api = "http://%s/drcom/login?callback=dr1647823658089" \
             "&DDDDD=%s&upass=%s&0MKKey=123456&R1=0&R3=%d&R6=0&para=00&v6ip="
-isp_list = {'campus': 0, 'telecom': 1, 'unicom': 2, 'mobile': 3}
 
 
-def request(lip, uid, passwd, isp):
+def request(lip, uid, passwd, isp, msg_list):
     # login network
     try:
         res = urllib.request.urlopen(login_api % (lip, uid, passwd, isp), timeout=5)
@@ -40,6 +35,15 @@ def request(lip, uid, passwd, isp):
 
 
 def login(config, isp=None):
+    # load response file and isp file
+    try:
+        with open("resource/error_info.json", 'r', encoding='utf-8') as file:
+            msg_list = json.load(file)
+        with open("resource/isp_info.json", 'r', encoding='utf-8') as file:
+            isp_list = json.load(file)
+    except FileNotFoundError as e:
+        print(e)
+
     # test connection 5 times for gateway
     counts = 0
     print("connection for %s" % config['gateway_ip'])
@@ -62,6 +66,8 @@ def login(config, isp=None):
             sys.exit(1)
 
         if isp:
-            request(config['gateway_ip'], config['user_id'], config['user_passwd'], isp_list[isp])
+            request(config['gateway_ip'], config['user_id'],
+                    config['user_passwd'], isp_list[isp], msg_list)
         else:
-            request(config['gateway_ip'], config['user_id'], config['user_passwd'], isp_list[config['isp_name']])
+            request(config['gateway_ip'], config['user_id'],
+                    config['user_passwd'], isp_list[config['isp_name']], msg_list)

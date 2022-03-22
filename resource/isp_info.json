@@ -1,0 +1,6 @@
+{
+  "campus": 0,
+  "telecom": 1,
+  "unicom": 2,
+  "mobile": 3
+}
