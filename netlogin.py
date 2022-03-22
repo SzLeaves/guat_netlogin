@@ -76,5 +76,5 @@ if __name__ == "__main__":
     # wrong options
     if len(sys.argv) == 1 or error:
         print("Invaild options.")
-        print("Use: %s [gen] [down] [up][--isp=][--config=]" % sys.argv[0])
+        print("Use: %s [gen][GEN_FILE_NAME] [up][down][--isp=ISP_NAME][--config=FILE_NAME]" % sys.argv[0])
         sys.exit(1)
