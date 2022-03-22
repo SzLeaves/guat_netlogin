@@ -7,23 +7,30 @@ import os
 import sys
 
 
-def genconfig():
-    if os.path.exists("config.json"):
-        print("Configure file was existd, Overwrite? (y/n): ", end='')
-        op = input()
-        if op == 'N' or op == 'n':
-            print("Bye.")
-            sys.exit(0)
-
+def genconfig(file_name=None):
     config = dict()
-    print("Generate new file.")
+    if not file_name:
+        save_file = "config.json"
+    else:
+        save_file = "%s.json" % file_name
+
+    print("Generate new file %s" % save_file)
     config['gateway_ip'] = input("enter network login address: ")
     config['user_id'] = input("enter your campus id: ")
     config['user_passwd'] = getpass.getpass("enter your password: ")
     config['isp_name'] = input("enter your isp name (campus/telecom/unicom/mobile): ")
 
+    if os.path.exists(save_file):
+        print("Configure file was existd, Overwrite? (y/n): ", end='')
+        op = input()
+        if op == 'Y' or op == 'y':
+            pass
+        else:
+            print("cancel.")
+            sys.exit(0)
+
     try:
-        with open("config.json", 'w', encoding='utf-8') as file:
+        with open(save_file, 'w', encoding='utf-8') as file:
             json.dump(config, file, ensure_ascii=False)
     except IOError as e:
         print(e)
@@ -32,4 +39,5 @@ def genconfig():
 
     print("Configure file generated successful.",
           "Use: %s up to login network." % sys.argv[0],
-          "Use: %s down to logout network." % sys.argv[0], sep='\n')
+          "Use: %s down to logout network." % sys.argv[0],
+          "or, Use: '%s --config=' option to specify a configure file.", sep='\n')

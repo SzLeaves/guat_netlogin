@@ -42,7 +42,7 @@ if __name__ == "__main__":
             else:
                 error = True
 
-    # up/down --isp/--config
+    # up/down/gen --isp/--config/file_name
     elif len(parms) == 2:
         if parms[0] == 'up':
             if parms[1][:6] == "--isp=":
@@ -54,6 +54,9 @@ if __name__ == "__main__":
 
         elif parms[0] == 'down' and parms[1][:9] == '--config':
             logout.logout(read_config(parms[1][9:]))
+
+        elif parms[0] == 'gen':
+            genconfig.genconfig(file_name=parms[1])
 
         else:
             error = True
