@@ -32,18 +32,25 @@ if __name__ == "__main__":
             print("There is no configure file.",
                   "Use: '%s gen' option to create new one." % sys.argv[0],
                   "or, Use: '%s --config=' option to specify one." % sys.argv[0], sep='\n')
+            sys.exit(1)
+
+        if parms[0] == 'up':
+            login.login(read_config("config.json"))
+        elif parms[0] == 'down':
+            logout.logout(read_config("config.json"))
+        elif parms[0] == 'gen':
+            genconfig.genconfig()
         else:
-            if parms[0] == 'up':
-                login.login(read_config("config.json"))
-            elif parms[0] == 'down':
-                logout.logout(read_config("config.json"))
-            elif parms[0] == 'gen':
-                genconfig.genconfig()
-            else:
-                error = True
+            error = True
 
     # up/down/gen --isp/--config/file_name
     elif len(parms) == 2:
+        if not is_config and parms[0] != 'gen':
+            print("There is no configure file.",
+                  "Use: '%s gen' option to create new one." % sys.argv[0],
+                  "or, Use: '%s --config=' option to specify one." % sys.argv[0], sep='\n')
+            sys.exit(1)
+
         if parms[0] == 'up':
             if parms[1][:6] == "--isp=":
                 login.login(read_config("config.json"), isp=parms[1][6:])
@@ -70,6 +77,7 @@ if __name__ == "__main__":
                 login.login(read_config(parms[1][9:]), isp=parms[2][6:])
             else:
                 error = True
+
         else:
             error = True
 
