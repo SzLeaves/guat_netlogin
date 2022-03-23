@@ -7,11 +7,11 @@ import sys
 import urllib.error
 import urllib.request
 
-login_api = "http://%s/drcom/login?callback=dr1647823658089" \
-            "&DDDDD=%s&upass=%s&0MKKey=123456&R1=0&R3=%d&R6=0&para=00&v6ip="
-
 
 def request(lip, uid, passwd, isp, msg_list):
+    login_api = "http://%s/drcom/login?callback=dr1647823658089" \
+                "&DDDDD=%s&upass=%s&0MKKey=123456&R1=0&R3=%d&R6=0&para=00&v6ip="
+
     # login network
     try:
         res = urllib.request.urlopen(login_api % (lip, uid, passwd, isp), timeout=5)
