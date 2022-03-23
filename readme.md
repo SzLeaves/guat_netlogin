@@ -7,6 +7,9 @@
 
 如果有其他需求，欢迎提交pr和issues :)
 
+> 主仓库地址：[Github](https://github.com/SzLeaves/guat_netlogin)  
+> 备用地址：[Gitee](https://gitee.com/szleaves/guat_netlogin)  
+
 
 ## Requirements 依赖要求 
 只需要安装python解释器，版本`3.x`及以上即可  
@@ -15,7 +18,7 @@
 
 ## Usage 使用
 ### 1. 下载
-使用`git`执行：`git clone https://github.com/SzLeaves/guat_netlogin.git`克隆仓库到本地  
+使用`git`执行：`git clone https://github.com/SzLeaves/guat_netlogin.git`  克隆仓库到本地  
 或者点这里下载压缩包：[main.zip](https://github.com/SzLeaves/guat_netlogin/archive/refs/heads/main.zip)  
 然后将脚本存放或解压到一个指定位置后即可  
 如果考虑方便命令执行，可以将`netlogin.py`所在的根目录路径加入环境变量中  
