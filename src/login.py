@@ -7,11 +7,12 @@ import sys
 import urllib.error
 import urllib.request
 
+login_api = "http://%s/drcom/login?callback=dr1647823658089" \
+            "&DDDDD=%s&upass=%s&0MKKey=123456&R1=0&R3=%d&R6=0&para=00&v6ip="
+status_api = "http://%s/drcom/chkstatus?callback=dr1648011656431&v=6113"
+
 
 def request(lip, uid, passwd, isp, msg_list):
-    login_api = "http://%s/drcom/login?callback=dr1647823658089" \
-                "&DDDDD=%s&upass=%s&0MKKey=123456&R1=0&R3=%d&R6=0&para=00&v6ip="
-
     # login network
     try:
         res = urllib.request.urlopen(login_api % (lip, uid, passwd, isp), timeout=5)
@@ -56,6 +57,24 @@ def login(config, isp=None):
         except Exception:
             print("try connected again: %d" % (counts + 1))
             counts += 1
+
+    # test login status
+    print("check login status: ", end='')
+    try:
+        res = urllib.request.urlopen(status_api % config['gateway_ip'])
+        data = str(res.read().decode('gbk')).strip()
+        status = json.loads(re.findall(r'{.*}', data)[0])
+        is_login = status['result']
+    except urllib.error.HTTPError as e:
+        print(e)
+        sys.exit(1)
+
+    if is_login:
+        print(status['uid'], status['NID'])
+        print("[ERROR] This account has logged, Please logout it and retry.")
+        sys.exit(1)
+    else:
+        print("no login, ok")
 
     # login network if test was successful
     if counts == 5:

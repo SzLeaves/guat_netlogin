@@ -7,10 +7,10 @@ import sys
 import urllib.error
 import urllib.request
 
+logout_api = "http://%s/drcom/logout?callback=dr1647825375804"
+
 
 def request(lip, msg_list):
-    logout_api = "http://%s/drcom/logout?callback=dr1647825375804"
-
     try:
         res = urllib.request.urlopen(logout_api % lip, timeout=5)
         data = str(res.read().decode('gbk')).strip()
