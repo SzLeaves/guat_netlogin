@@ -37,7 +37,7 @@ def genconfig(file_name=None):
         print("[ERROR] Configure file generated faild.")
         sys.exit(1)
 
-    print("Configure file generated successful.",
+    print("\nConfigure file generated successful.",
           "Use: %s up to login network." % sys.argv[0],
           "Use: %s down to logout network." % sys.argv[0],
-          "or, Use: '%s --config=' option to specify a configure file.", sep='\n')
+          "or, Use: '--config=' option to specify a configure file.", sep='\n')
