@@ -99,6 +99,3 @@ netlogin.py up --isp=[your_bind_isp]
 ```bash
 netlogin.py down --config=[your_config_file]
 ```
-
-## Auto Login 自动登录
-如果有启动系统时就自动联网的需求，可以为`netlogin.py`配置自启动服务
