@@ -54,8 +54,6 @@ if __name__ == "__main__":
                       "Use: '%s gen' option to create new one." % sys.argv[0],
                       "or, Use: '%s --config=' option to specify one." % sys.argv[0], sep='\n')
                 sys.exit(1)
-            else:
-                error = True
 
         if parms[0] == 'up':
             if parms[1][:6] == "--isp=":
