@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     # up/down/gen --isp/--config/file_name
     elif len(parms) == 2:
-        if not is_config and parms[0] != 'gen':
+        if not is_config and parms[1][:9] != "--config=":
             print("There is no configure file.",
                   "Use: '%s gen' option to create new one." % sys.argv[0],
                   "or, Use: '%s --config=' option to specify one." % sys.argv[0], sep='\n')
@@ -59,7 +59,7 @@ if __name__ == "__main__":
             else:
                 error = True
 
-        elif parms[0] == 'down' and parms[1][:9] == '--config':
+        elif parms[0] == 'down' and parms[1][:9] == '--config=':
             logout.logout(read_config(parms[1][9:]))
 
         elif parms[0] == 'gen':
