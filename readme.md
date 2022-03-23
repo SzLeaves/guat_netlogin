@@ -1,19 +1,19 @@
 # GUAT campus network auto login
 桂航校园网认证服务登录脚本，使用python构建
 
-## Introduce
+## Introduce 介绍
 本项目用于航院校园网认证系统的登录认证  
 只需要配置好`config`文件后运行脚本，就可以登录校园网服务，**不需要打开浏览器操作**  
 
 如果有其他需求，欢迎提交pr和issues :)
 
 
-## Requirements  
-只需要安装`python`解释器，版本`3.x`及以上即可  
-可以去这里下载安装包：[python.org](https://www.python.org/)  
+## Requirements 依赖要求 
+只需要安装python解释器，版本`3.x`及以上即可  
+可以去这里下载安装包：[python.org/downloads](https://www.python.org/downloads/)  
 **安装时记得添加环境变量**
 
-## Usage
+## Usage 使用
 ### 1. 下载
 使用`git`执行：`git clone https://github.com/SzLeaves/guat_netlogin.git`克隆仓库到本地  
 或者点这里下载压缩包：[main.zip](https://github.com/SzLeaves/guat_netlogin/archive/refs/heads/main.zip)  
@@ -21,24 +21,26 @@
 如果考虑方便命令执行，可以将`netlogin.py`所在的根目录路径加入环境变量中  
 
 ### 2. 生成配置文件
-进入`netlogin.py`所在的根目录  
+进入启动脚本`netlogin.py`所在的根目录  
 
-**首次运行脚本**需要配置登录用户文件：
+**首次运行启动脚本**需要配置登录用户文件：
 * Linux / MacOS 在终端运行：`./netlogin.py gen`  
 * Windows 在命令行运行：`python netlogin.py gen`
 
 并按提示输入校园网登入验证地址（只需要域名或ip），学号，密码和网络运营商即可  
-脚本会自动在当前目录下创建一个新的登录配置文件`config.json`  
-```
+脚本会自动在当前目录下创建一个新的**默认**登录配置文件`config.json`  
+```bash
 ➜  ./netlogin.py gen
 Generate new file.
 enter network login address: xxx.xxx.xxx                     # 认证入口IP：10.1.2.3
 enter your campus id: 123456                                 # 学号 
 enter your password:                                         # 上网密码
 enter your isp name (campus/telecom/unicom/mobile): campus   # 网络运营商
+
 Configure file generated successful.
-Use: ./netlogin.py up to login network.
-Use: ./netlogin.py down to logout network.
+Use: netlogin.py up to login network.
+Use: netlogin.py down to logout network.
+or, Use: '--config=' option to specify a configure file.
 ```
 
 其中**网络运营商**目前校内有四家：配置时需要输入指定的运营商名称：
@@ -48,6 +50,25 @@ Use: ./netlogin.py down to logout network.
 |telecom  |中国电信    |
 |unicom   |中国联通    |
 |mobile   |中国移动    |
+
+如果有需要生成多个用户的配置文件，可以使用`gen [FILE_NAME]`参数指定配置文件名称：
+```bash
+➜  ./netlogin.py gen example        # 生成一个名称为example的配置文件
+Generate new file example.json
+enter network login address: xxx.xxx.xxx
+enter your campus id: 987654
+enter your password: 
+enter your isp name (campus/telecom/unicom/mobile): campus
+
+Configure file generated successful.
+Use: ./netlogin.py up to login network.
+Use: ./netlogin.py down to logout network.
+or, Use: '--config=' option to specify a configure file.
+```
+
+成功生成的配置文件默认会放置在**启动脚本所在的根目录下**  
+
+> 如果在登录的时候没有指定配置文件，启动脚本将默认选择`config.json`
 
 ### 3. 登录
 配置完成后，即可登录校园认证网络：  
@@ -79,5 +100,5 @@ netlogin.py up --isp=[your_bind_isp]
 netlogin.py down --config=[your_config_file]
 ```
 
-## Auto Login
+## Auto Login 自动登录
 如果有启动系统时就自动联网的需求，可以为`netlogin.py`配置自启动服务
