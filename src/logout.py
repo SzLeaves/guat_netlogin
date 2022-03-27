@@ -26,6 +26,7 @@ def request(lip, msg_list):
         else:
             print("[ERROR] %s" % msg_list[msg['msga']])
             print("[INFO] client: %s, server: %s" % (msg['ss5'], msg['ss6']))
+            sys.exit(1)
     else:
         print(res.status)
         print(data)
