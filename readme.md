@@ -118,7 +118,7 @@ date >> run.log && python3 netlogin.py up >> run.log 2>&1
   保存到`C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp`中即可    
 > 记得将`_your_path_to_replace_`变量的内容替换成**启动脚本所在的根目录路径**
 ```bash
-RUN_HOME="D:\Documents\guat_netlogin"
+RUN_HOME="_your_path_to_replace_"
 set ws=WScript.CreateObject("WScript.Shell")
 ws.Run "cmd /c cd /D " + RUN_HOME + " & start /b " + RUN_HOME + "\auto_login.bat", 0
 ```
