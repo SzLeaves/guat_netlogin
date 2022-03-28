@@ -102,3 +102,25 @@ netlogin.py up --isp=[your_bind_isp]
 ```bash
 netlogin.py down --config=[your_config_file]
 ```
+
+## Auto Login 开机自动登录校园网  
+* Linux用户：将以下启动脚本添加到`systemd`服务中并设置开启即可  
+> 记得将`_your_path_to_replace_`变量的内容替换成**启动脚本所在的根目录路径**
+```bash
+#!/bin/bash
+export RUN_HOME=_your_path_to_replace_    # 记得替换内容
+cd $RUN_HOME && echo -e >> run.log
+date >> run.log && python3 netlogin.py up >> run.log 2>&1
+```
+
+
+* Windows用户：将以下启动脚本另存为`auto_netlogin.vbs`    
+  保存到`C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp`中即可    
+> 记得将`_your_path_to_replace_`变量的内容替换成**启动脚本所在的根目录路径**
+```bash
+set ws=WScript.CreateObject("WScript.Shell")
+set env=CreateObject("WScript.Shell").Environment("system")
+env("RUN_HOME")="_your_path_to_replace_"
+
+ws.Run "cmd /c cd /D %RUN_HOME% & start /b %RUN_HOME%\auto_login.bat", 0
+```
