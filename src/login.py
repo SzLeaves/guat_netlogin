@@ -46,17 +46,20 @@ def login(config, isp=None):
         print(e)
         sys.exit(1)
 
-    # test connection 5 times for gateway
+    # test connection 3 times for gateway
     counts = 0
     print("connection for %s" % config['gateway_ip'])
-    while counts < 5:
+    while counts < 3:
         try:
-            res = urllib.request.urlopen("http://%s" % config['gateway_ip'], timeout=15)
+            res = urllib.request.urlopen("http://%s" % config['gateway_ip'], timeout=20)
             if res.status == 200:
                 break
         except Exception:
             print("try connected again: %d" % (counts + 1))
             counts += 1
+
+    if counts == 3:
+        raise ConnectionError("[ERROR] Campus network %s has unavaliable." % config['gateway_ip'])
 
     # test login status
     print("check login status: ", end='')
@@ -76,18 +79,15 @@ def login(config, isp=None):
     else:
         print("no login, ok")
 
-    # login network if test was successful
-    if counts == 5:
-        raise ConnectionError("[ERROR] Campus network %s has unavaliable." % config['gateway_ip'])
-    else:
-        # isp vaildity
-        if config['isp_name'] not in isp_list or (isp and isp not in isp_list):
-            print("[ERROR] Specified ISP not exists.")
-            sys.exit(1)
+    # isp vaildity
+    if config['isp_name'] not in isp_list or (isp and isp not in isp_list):
+        print("[ERROR] Specified ISP not exists.")
+        sys.exit(1)
 
-        if isp:
-            request(config['gateway_ip'], config['user_id'],
-                    config['user_passwd'], isp_list[isp], msg_list)
-        else:
-            request(config['gateway_ip'], config['user_id'],
-                    config['user_passwd'], isp_list[config['isp_name']], msg_list)
+    # login network if test was successful
+    if isp:
+        request(config['gateway_ip'], config['user_id'],
+                config['user_passwd'], isp_list[isp], msg_list)
+    else:
+        request(config['gateway_ip'], config['user_id'],
+                config['user_passwd'], isp_list[config['isp_name']], msg_list)

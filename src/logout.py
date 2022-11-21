@@ -41,12 +41,12 @@ def logout(config):
         print(e)
         sys.exit(1)
 
-    # test connection 5 times for gateway
+    # test connection 3 times for gateway
     counts = 0
     print("connection for %s" % config['gateway_ip'])
-    while counts < 5:
+    while counts < 3:
         try:
-            res = urllib.request.urlopen("http://%s" % config['gateway_ip'], timeout=15)
+            res = urllib.request.urlopen("http://%s" % config['gateway_ip'], timeout=20)
             if res.status == 200:
                 break
         except Exception:
@@ -54,7 +54,7 @@ def logout(config):
             counts += 1
 
     # logout network if test was successful
-    if counts == 5:
+    if counts == 3:
         raise ConnectionError("[ERROR] Campus network %s has unavaliable." % config['gateway_ip'])
     else:
         request(config['gateway_ip'], msg_list)
